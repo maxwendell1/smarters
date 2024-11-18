@@ -1,55 +1,39 @@
 package com.smarters.course.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
 public class Aluno {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    private String email;
-    private LocalDate dataCadastro;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String nome;
+	private String email;
+	private LocalDate dataCadastro;
 
-    public Aluno() {
+	@OneToMany(mappedBy = "aluno")
+	@JsonBackReference
+	private Set<Inscricao> inscricoes = new HashSet<>();
+
+	public Aluno() {
 		super();
 	}
-    
+
 	public Aluno(Long id) {
 		super();
 		this.id = id;
 	}
 
-	@OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Inscricao> inscricoes = new HashSet<>();
-
-    @Transient
-    public Set<Curso> getCursos() {
-        Set<Curso> cursos = new HashSet<>();
-        for (Inscricao inscricao : inscricoes) {
-            cursos.add(inscricao.getCurso());
-        }
-        return cursos;
-    }
 	public Long getId() {
 		return id;
 	}
 
-	public Set<Inscricao> getInscricoes() {
-		return inscricoes;
-	}
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -67,6 +51,21 @@ public class Aluno {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	public LocalDate getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public Set<Inscricao> getInscricoes() {
+		return inscricoes;
+	}
+
+	public void setInscricoes(Set<Inscricao> inscricoes) {
+		this.inscricoes = inscricoes;
+	}
 }
 

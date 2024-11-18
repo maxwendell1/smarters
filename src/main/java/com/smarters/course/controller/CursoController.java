@@ -2,7 +2,6 @@ package com.smarters.course.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.smarters.course.dto.AlunoDTO;
 import com.smarters.course.dto.CursoDTO;
 import com.smarters.course.model.Curso;
 import com.smarters.course.populator.InscricaoPopulator;

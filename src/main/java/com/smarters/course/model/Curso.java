@@ -1,59 +1,39 @@
 package com.smarters.course.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 @Entity
-@Data
 public class Curso {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    private String descricao;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String nome;
+	private String descricao;
+	private LocalDate dataCriacao;
 
-    private LocalDate dataCriacao;
+	@OneToMany(mappedBy = "curso")
+	@JsonBackReference
+	private Set<Inscricao> inscricoes = new HashSet<>();
 
-    public Curso() {
+	public Curso() {
 		super();
 	}
-    
+
 	public Curso(Long id) {
 		super();
 		this.id = id;
 	}
-	
-	
-	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonIgnore
-    private Set<Inscricao> inscricoes = new HashSet<>();
-
-    @Transient
-    public Set<Aluno> getAlunos() {
-        Set<Aluno> alunos = new HashSet<>();
-        for (Inscricao inscricao : inscricoes) {
-            alunos.add(inscricao.getAluno());
-        }
-        
-        return alunos;
-    }
 
 	public Long getId() {
 		return id;
 	}
 
-	public LocalDate getDataCriacao() {
-		return dataCriacao;
-	}
-
-	public void setDataCriacao(LocalDate dataCriacao) {
-		this.dataCriacao = dataCriacao;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -72,4 +52,27 @@ public class Curso {
 		this.descricao = descricao;
 	}
 
+	public LocalDate getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public Set<Aluno> getAlunos() {
+		Set<Aluno> alunos = new HashSet<>();
+		for (Inscricao inscricao : inscricoes) {
+			alunos.add(inscricao.getAluno());
+		}
+		return alunos;
+	}
+
+	public void setDataCriacao(LocalDate dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Set<Inscricao> getInscricoes() {
+		return inscricoes;
+	}
+
+	public void setInscricoes(Set<Inscricao> inscricoes) {
+		this.inscricoes = inscricoes;
+	}
 }

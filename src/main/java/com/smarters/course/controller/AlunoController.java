@@ -21,7 +21,10 @@ public class AlunoController {
     }
 
     @PostMapping
-    public AlunoDTO createAluno(@RequestBody Aluno aluno) {
+    public AlunoDTO createAluno(@RequestBody AlunoDTO alunoDTO) {
+        Aluno aluno = new Aluno();
+        aluno.setNome(alunoDTO.getNome());
+        aluno.setEmail(alunoDTO.getEmail());
         return populator.toAlunoDTO(alunoService.saveAluno(aluno));
     }
 

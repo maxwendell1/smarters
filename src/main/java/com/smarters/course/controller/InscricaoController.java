@@ -1,6 +1,7 @@
 package com.smarters.course.controller;
 
 import com.smarters.course.model.Inscricao;
+import com.smarters.course.populator.InscricaoPopulator;
 import com.smarters.course.service.InscricaoService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,10 +11,12 @@ import java.util.List;
 public class InscricaoController {
 
     private final InscricaoService inscricaoService;
+    private final InscricaoPopulator populator;
     
     
-    public InscricaoController(InscricaoService inscricaoService) {
+    public InscricaoController(InscricaoService inscricaoService, InscricaoPopulator populator) {
         this.inscricaoService = inscricaoService;
+        this.populator = populator;
     }
 
     @PostMapping
