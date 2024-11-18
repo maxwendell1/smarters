@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
 @Data
 public class Curso {
@@ -28,19 +29,20 @@ public class Curso {
 		this.id = id;
 	}
 	
-	@ManyToMany
-	@JoinTable(
-	    name = "Inscricao",
-	    joinColumns = @JoinColumn(name = "curso_id"),
-	    inverseJoinColumns = @JoinColumn(name = "aluno_id")
-	)
-	@JsonIgnore
-	private Set<Aluno> alunos = new HashSet<>();
-
 	
-    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
     private Set<Inscricao> inscricoes = new HashSet<>();
-    
+
+    @Transient
+    public Set<Aluno> getAlunos() {
+        Set<Aluno> alunos = new HashSet<>();
+        for (Inscricao inscricao : inscricoes) {
+            alunos.add(inscricao.getAluno());
+        }
+        
+        return alunos;
+    }
 
 	public Long getId() {
 		return id;

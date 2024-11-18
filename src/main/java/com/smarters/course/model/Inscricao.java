@@ -1,25 +1,24 @@
 package com.smarters.course.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDate;
 
 @Entity
-@Data
+
 public class Inscricao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @ManyToOne
     @JoinColumn(name = "aluno_id", nullable = false)
     private Aluno aluno;
 
     @ManyToOne
-    @JoinColumn(name = "curso_id", nullable = false)
+    @JoinColumn(name = "curso_id", nullable = false) 
     private Curso curso;
-
+    
     private LocalDate dataInscricao;
 
 	public Aluno getAluno() {
@@ -45,7 +44,6 @@ public class Inscricao {
 	public void setDataInscricao(LocalDate dataInscricao) {
 		this.dataInscricao = dataInscricao;
 	}
-    
     
 }
 

@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Data
 public class Aluno {
@@ -26,17 +24,18 @@ public class Aluno {
 		super();
 		this.id = id;
 	}
-	
-	@ManyToMany(mappedBy = "alunos")
-	@JsonIgnore
-	private Set<Curso> cursos = new HashSet<>();
 
-
-	@OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Inscricao> inscricoes = new HashSet<>();
-	
-	
 
+    @Transient
+    public Set<Curso> getCursos() {
+        Set<Curso> cursos = new HashSet<>();
+        for (Inscricao inscricao : inscricoes) {
+            cursos.add(inscricao.getCurso());
+        }
+        return cursos;
+    }
 	public Long getId() {
 		return id;
 	}
@@ -68,8 +67,6 @@ public class Aluno {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 	
 }
 

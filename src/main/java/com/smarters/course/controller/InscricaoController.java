@@ -10,7 +10,8 @@ import java.util.List;
 public class InscricaoController {
 
     private final InscricaoService inscricaoService;
-
+    
+    
     public InscricaoController(InscricaoService inscricaoService) {
         this.inscricaoService = inscricaoService;
     }

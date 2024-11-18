@@ -1,4 +1,4 @@
-package com.smarters.course.popuator;
+package com.smarters.course.populator;
 
 import org.springframework.stereotype.Component;
 import com.smarters.course.dto.AlunoDTO;
@@ -8,6 +8,7 @@ import com.smarters.course.model.Curso;
 
 @Component
 public class InscricaoPopulator {
+	
     public AlunoDTO toAlunoDTO(Aluno aluno) {
         AlunoDTO dto = new AlunoDTO();
         dto.setId(aluno.getId());
